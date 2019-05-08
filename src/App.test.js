@@ -41,10 +41,22 @@ test('renders increment button', () => {
     expect(button.length).toBe(1);
 });
 
+test('render decrement button', () => {
+    const wrapper = setup();
+    const button = findByTestAttr(wrapper, 'decrement-button');
+    expect(button.length).toBe(1);
+});
+
 test('renders counter display', () => {
     const wrapper = setup();
     const counterDisplay = findByTestAttr(wrapper, 'counter-display');
     expect(counterDisplay.length).toBe(1);
+});
+
+test('error msg rendered hidden', () => {
+    const wrapper = setup();
+    const errorMsg = findByTestAttr(wrapper, 'errorMsg');
+    expect(errorMsg.hasClass("hidden")).toEqual(true);
 });
 
 test('counter starts at 0', () => {
@@ -57,7 +69,7 @@ test('clicking button increments counter display', () => {
     const counter = 7;
     const wrapper = setup(null, {counter});
 
-    // find button and click
+    // find inc button and click
     const button = findByTestAttr(wrapper, 'increment-button');
     button.simulate('click');
     wrapper.update();
@@ -66,3 +78,31 @@ test('clicking button increments counter display', () => {
     const counterDisplay = findByTestAttr(wrapper, 'counter-display');
     expect(counterDisplay.text()).toContain( counter + 1 )
 });
+
+test('cliking button decrement counter display', () => {
+    const counter = 7;
+    const wrapper = setup(null, {counter});
+
+    //find dec button and click
+    const button = findByTestAttr(wrapper, 'decrement-button');
+    button.simulate('click');
+    wrapper.update();
+
+    // find display and test value
+    const counterDisplay = findByTestAttr(wrapper, 'counter-display');
+    expect(counterDisplay.text()).toContain( counter - 1 )
+})
+
+test('show error if decrement below zero', () => {
+    const counter = 0;
+    const wrapper = setup(null, {counter});
+
+    //find dec button and click
+    const button = findByTestAttr(wrapper, 'decrement-button');
+    button.simulate('click');
+    wrapper.update();
+
+    // find display and test value
+    const errorMsg = findByTestAttr(wrapper, 'errorMsg');
+    expect(errorMsg.hasClass("show")).toEqual(true);
+})

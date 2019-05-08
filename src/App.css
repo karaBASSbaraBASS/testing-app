@@ -22,6 +22,25 @@
 .App-link {
   color: #61dafb;
 }
+.textWrapper{
+  position: relative;
+}
+.textWrapper h1 {
+  padding-bottom: 30px;
+}
+.error {
+  color: red;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: opacity 0.3s linear;
+}
+.hidden {
+  opacity: 0;
+}
+.show {
+  opacity: 1;
+}
 
 @keyframes App-logo-spin {
   from {
